@@ -87,7 +87,7 @@ app.post('/insert', async(req,res)=> {
         const imgLink = processedData.files[0].location
         const mainTaskTitle = processedData.body.mainTaskTitle
         const subtasks = JSON.parse(processedData.body.subtasks)
-
+        await conn.beginTransaction()
          const result = await pool.query(SQL_INSERT_MAINTASK, [mainTaskTitle,imgLink])
          const bulkySubTasksArr= []
         subtasks.forEach(st=> {
@@ -96,9 +96,11 @@ app.post('/insert', async(req,res)=> {
             bulkySubTasksArr.push(values)
         })
          await pool.query(SQL_INSERT_SUBTASK, [bulkySubTasksArr])
-        res.status(200).json({message:"Main Task and subtasks are inserted"})
+         await conn.commit()
+         res.status(200).json({message:"Main Task and subtasks are inserted"})
     }catch(e) {
         console.log(e)
+        conn.rollback()
         res.status(500).json({message: `server error: ${e}`})
     }finally{
         conn.release()
