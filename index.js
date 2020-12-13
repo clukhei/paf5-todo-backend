@@ -104,6 +104,8 @@ function groupBy(key) {
 		}, {});
 	};
 }
+
+
 const getAllTasks = makeQuery(SQL_GET_TASKS, pool);
 app.get("/alltasks", (req, res) => {
 	getAllTasks()
@@ -188,6 +190,25 @@ const SQL_UPDATE_SUBTASK =
 	}finally{
 		conn.release()
 	}
+})
+const SQL_DELETE_MAINTASK = "delete from maintasks where id = ?;"
+const deleteMainTask =makeQuery(SQL_DELETE_MAINTASK, pool)
+app.delete("/delete/:mainTaskId", (req,res)=> {
+	const mainTaskId = req.params['mainTaskId']
+	deleteMainTask(mainTaskId)
+		.then(result => {
+			console.log(result)
+			if (result.affectedRows > 0){
+				res.status(200).json(result)
+			} else {
+				res.status(404).json({message: "Main task not found"})
+			}
+			
+		})
+		.catch(err => {
+			res.status(500).json({message: "server error"})
+			console.log(err)
+		})
 })
 
 app.post("/insert", async (req, res) => {
