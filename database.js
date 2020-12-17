@@ -51,30 +51,7 @@ const sqlQuery = {
 	 deleteMainTask : makeQuery(sqlStatement.SQL_DELETE_MAINTASK, pool)
 }
 
-/* 	const getAllTasks = makeQuery(SQL_GET_TASKS, pool);
-	const getOneTask = makeQuery(SQL_GET_ONE_TASK, pool);
-	const getNextSubTaskId = makeQuery(SQL_NEXT_SUBTASKID, pool);
-	const deleteMainTask = makeQuery(SQL_DELETE_MAINTASK, pool);
-;
- */
+
 
 module.exports = {sqlStatement, sqlQuery, pool};
 
-
-/* 	const SQL_GET_TASKS =
-		"SELECT * from subtasks right join maintasks on subtasks.maintask_id = maintasks.id";
-	const SQL_GET_ONE_TASK =
-		"SELECT maintask_id as maintaskId, maintask_img as img, subtasks.id as subtaskId, subtask_title as subtaskTitle, substask_status as subtaskStatus, maintask_title as mainTaskTitle from subtasks right join maintasks on subtasks.maintask_id = maintasks.id where maintask_id = ? ";
-	const SQL_NEXT_SUBTASKID =
-		"select MAX(id)+1 as nextSubtaskId from subtasks;";
-	const SQL_INSERT_MAINTASK =
-		"INSERT INTO maintasks (`maintask_title`, `maintask_img`) values(? , ?)";
-	const SQL_INSERT_SUBTASK =
-		"INSERT INTO subtasks (`maintask_id`, `subtask_title`, `substask_status`) values ?";
-	const SQL_UPDATE_MAINTASK =
-		"UPDATE maintasks set maintask_title = ? , maintask_img = ? where id =?";
-	const SQL_UPDATE_MAINTASK_WO_IMG =
-		"UPDATE maintasks set maintask_title = ? where id =?";
-	const SQL_UPDATE_SUBTASK =
-		"INSERT INTO subtasks(id, maintask_id ,subtask_title, substask_status) values ? on duplicate key update subtask_title=values(subtask_title), substask_status=values(substask_status)";
-	const SQL_DELETE_MAINTASK = "delete from maintasks where id = ?;"; */
